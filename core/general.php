@@ -34,12 +34,12 @@ function Gravatar($email)
     $options = Helper::options();
     $b = str_replace('@qq.com', '', $email);
     if (stristr($email, '@qq.com') && is_numeric($b) && strlen($b) < 11 && strlen($b) > 4) {
-        $nk = 'https://s.p.qq.com/pub/get_face?img_type=3&uin=' . $b;
-        $c = get_headers($nk, true);
-        $d = $c['Location'];
-        $q = json_encode($d);
-        $k = explode("&k=", $q)[1];
-        echo 'https://q.qlogo.cn/g?b=qq&k=' . $k . '&s=100';
+        // $nk = 'https://s.p.qq.com/pub/get_face?img_type=3&uin=' . $b;
+        // $c = get_headers($nk, true);
+        // $d = $c['Location'];
+        // $q = json_encode($d);
+        // $k = explode("&k=", $q)[1];
+        echo '//q1.qlogo.cn/g?b=qq&nk=' . $b. '&s=100';
     } else {
         $email = md5($email);
         if ($options->bcool_Gravatar == '1') {
@@ -65,23 +65,27 @@ function fallbackGravatar()
     $options = Helper::options();
     $options->themeUrl('./assets/img/avatar/' . rand(1, 100) . '.png');
 }/*简介图文获取图片*/
-function thumb($obj)
+function thumb($obj,$hasLogin)
 {/*获取附件首张图片*/
     $attach = $obj->attachments(1)->attachment;/*获取文章首张图片*/
     preg_match_all("/\<img.*?src\=\"(.*?)\"[^>]*>/i", $obj->content, $thumbUrl);
     $img_src = $thumbUrl[1][0];/*获取自定义随机图片*/
     $options = Typecho_Widget::widget('Widget_Options');
-    $thumbs = explode("|", $options->bcool_cover);/*获取文章封面*/
+    if($hasLogin){
+        $thumbs = explode("|", $options->bcool_cover);/*获取文章封面*/
+    }else{
+        $thumbs = explode("|", $options->public_bcool_cover);/*获取文章封面*/
+    }
     $cover = $obj->fields->cover;
     if ($cover) {
         $thumb = $cover;
+    } else if ($options->bcool_cover && count($thumbs) > 0) {
+        $thumb = $thumbs[rand(0, count($thumbs) - 1)];
     } elseif (isset($attach->isImage) && $attach->isImage == 1) {
         $thumb = $attach->url;
     } else if ($img_src) {
         $thumb = $img_src;
-    } else if ($options->bcool_cover && count($thumbs) > 0) {
-        $thumb = $thumbs[rand(0, count($thumbs) - 1)];
-    } else {
+    }else {
         $thumb = 'https://tuapi.eees.cc/api.php?category={dongman,fengjing,meinv,biying}&type=302&t=' . rand(1, 1000);
     }
     return $thumb;

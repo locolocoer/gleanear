@@ -1,0 +1,215 @@
+.pages-controls {
+    display: block;
+    float: left;
+    width: 100%;
+    border-top: 1px solid #DCDEE1;
+    border-bottom: 1px solid #DCDEE1;
+    margin-bottom: 50px;
+}
+
+.pages-controls .post-title {
+    font-size: 15px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    line-height: 20px;
+    margin-bottom: 0;
+}
+
+.pages-controls-item {
+    min-height: 130px;
+    width: 50%;
+    padding-top: 45px;
+    -webkit-appearance: 45px;
+    -moz-appearance: 45px;
+    appearance: 45px;
+    transition: background 0.2s linear;
+    display: block;
+    float: left;
+}
+
+.pages-controls-item-wrapper {
+    display: block;
+    float: left;
+    width: 372px;
+}
+
+.pages-controls-item.prev-article {
+    padding-right: 50px;
+    text-align: right;
+    border-right: 1px solid #DCDEE1;
+    margin-right: -1px;
+    padding-left: 12px;
+}
+
+.pages-controls-item.prev-article .pages-controls-item-wrapper {
+    float: right;
+}
+
+.pages-controls-item.prev-article .control-direction {
+    padding-left: 18px;
+    float: right;
+}
+
+.pages-controls-item.prev-article .control-direction:before {
+    left: 0;
+}
+
+.pages-controls-item.next-article {
+    padding-left: 50px;
+    padding-right: 12px;
+    border-left: 1px solid #DCDEE1;
+}
+
+.pages-controls-item.next-article .control-direction {
+    padding-right: 18px;
+}
+
+.pages-controls-item.next-article .control-direction:before {
+    right: 0;
+    transform: rotate(180deg);
+}
+
+.pages-controls-item:hover {
+    background: #ebebeb;
+}
+
+.pages-controls-item .control-direction {
+    display: block;
+    float: left;
+    color: #8E8E8E;
+    font-size: 12px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    line-height: 30px;
+    position: relative;
+    width: auto;
+    margin-bottom: 5px;
+}
+
+.dark .pages-controls-item.prev-article,
+.dark .pages-controls-item.next-article,
+.dark .pages-controls {
+    border-color: #3C3C3C;
+}
+
+.dark .pages-controls-item:hover {
+    background: #2b2b2b;
+}
+
+.pages-controls-item-wrapper {
+    width: 314px;
+}
+
+.pages-controls-item.prev-article {
+    padding-right: 40px;
+}
+
+.pages-controls-item.next-article {
+    padding-left: 40px;
+}
+
+.pages-controls-item {
+    padding-top: 36px;
+}
+
+.pages-controls .post-title {
+    font-size: 18px;
+    line-height: 26px;
+}
+
+.pages-controls-item-wrapper {
+    width: 100%;
+    max-width: 510px;
+}
+
+.pages-controls .post-title {
+    font-size: 17px;
+    line-height: 24px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.pageNav {
+    display: flex;
+    /* position:absolute;
+      left:50% */
+    /* width: 310px; */
+    float: none;
+    /* padding-left: 30px; */
+    margin: 0 auto;
+    margin-top: 30px;
+}
+
+@media screen and (min-width:1000px) {
+    .pageNav {
+        margin-top: 15px;
+    }
+}
+
+.pageNav form {
+    float: left;
+    width: 130px;
+}
+.pageNav .centerbox{
+    margin:auto;
+    width: auto;
+}
+.pageNav .discription {
+    float: left;
+    /* color: blue; */
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 18px;
+    margin-bottom: 5px;
+    /* width: 180px; */
+    width: auto;
+    height: 20px;
+    line-height: 25px;
+}
+.dark .pageNav .discription{
+    color: rgba(255,255,255,0.9);
+}
+.pageNav input {
+    border: 2px solid blue;
+    border-right: none;
+    float: left;
+    height: 30px;
+    width: 80px;
+    text-align: center;
+}
+.pageNav input::placeholder {
+    color:rgba(0, 0, 0, 0.55)
+}
+.pageNav button {
+    background-color: blue;
+    height: 30px;
+    width: 45px;
+    color: white;
+}
+
+.pageNav button:hover {
+    background-color: darkblue;
+}
+@media screen and (min-width:1000px){
+    .footer .wrap .footer-right {
+        position:fixed;
+        top: 90%;
+        right: 5px;
+    }
+}
+@media screen and (max-width:1000px) {
+    .top-panel .wrap .wrap_float .mode-check {
+        left: 53%;
+        top: 90%;
+       }
+}
+
+.dark .thumb {
+    filter: grayscale(0.6);
+}

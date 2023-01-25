@@ -22,6 +22,10 @@ if (!defined('__TYPECHO_ROOT_DIR__')) exit;
                  error-src="<?php fallbackGravatar(); ?>" alt=""/>
             <h1><?php $this->options->bcool_nickname(); ?></h1>
             <h2><?php $this->options->bcool_slogan() ?><br></h2>
+            <?php Typecho_Widget::widget('Widget_Stat')->to($item); ?>
+            <h2 title="累计文章数">
+                <span><a href="https://www.fengdaxian.xyz/index.php/74.html">累计有<?php echo number_format($item->publishedPostsNum); ?>篇文章</a></span>
+            </h2>
             <ul><?php indexAppInfo() ?></ul>
         </div>
 </section>
