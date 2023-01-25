@@ -9,59 +9,14 @@ if (!defined('__TYPECHO_ROOT_DIR__'))
     exit;
 $this->need('header.php'); ?>
 
-<!-- 
-<style>
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-    }
-
-    input[type="number"] {
-        -moz-appearance: textfield;
-    }
-
-    .pageNav {
-        display: block;
-        /* position:absolute;
-        left:50% */
-        width: 160px;
-        padding-left: 30px;
-        margin: 0 auto;
-        margin-top: 30px;
-    }
-
-    .pageNav div {
-        float: left;
-        /* color: blue; */
-        color: rgba(0, 0, 0, 0.5) font-size: 20px;
-    }
-
-    .pageNav input {
-        border: 2px solid blue;
-        border-right: none;
-        float: left;
-        height: 30px;
-        width: 80px;
-        text-align: center;
-    }
-
-    .pageNav button {
-        background-color: blue;
-        height: 30px;
-        width: 45px;
-        color: white;
-    }
-
-    .pageNav button:hover {
-        background-color: darkblue;
-    }
-</style> -->
 <?php
 $options = Typecho_Widget::widget('Widget_Options');
+$pri_thumbs = explode("|", $options->bcool_cover); /*获取文章封面*/
+$pub_thumbs = explode("|", $options->public_bcool_cover);
 if($this->user->hasLogin()){
-    $thumbs = explode("|", $options->bcool_cover); /*获取文章封面*/
+    $thumbs = array_merge($pri_thumbs, $pub_thumbs);
 }else{
-    $thumbs = explode("|", $options->public_bcool_cover);
+    $thumbs = $pub_thumbs;
 }
 $num = count($thumbs);
 // shuffle($thumbs);

@@ -71,10 +71,12 @@ function thumb($obj,$hasLogin)
     preg_match_all("/\<img.*?src\=\"(.*?)\"[^>]*>/i", $obj->content, $thumbUrl);
     $img_src = $thumbUrl[1][0];/*获取自定义随机图片*/
     $options = Typecho_Widget::widget('Widget_Options');
+    $pub_thumbs = explode("|", $options->public_bcool_cover);/*获取文章封面*/
+    $pri_thumbs = explode("|", $options->bcool_cover);/*获取文章封面*/
     if($hasLogin){
-        $thumbs = explode("|", $options->bcool_cover);/*获取文章封面*/
+        $thumbs = array_merge($pub_thumbs, $pri_thumbs);
     }else{
-        $thumbs = explode("|", $options->public_bcool_cover);/*获取文章封面*/
+        $thumbs = $pub_thumbs;
     }
     $cover = $obj->fields->cover;
     if ($cover) {
@@ -151,9 +153,9 @@ function getPermalinkFromCoid($coid)
 function share($t, $type)
 {
     if ($type == 'qq') {
-        echo 'http://connect.qq.com/widget/shareqq/index.html?url=' . $t->permalink . '&sharesource=qzone&title=' . $t->title . '&pics=' . thumb($t) . '&summary=' . $t->title . '&desc=' . $t->title;
+        echo 'http://connect.qq.com/widget/shareqq/index.html?url=' . $t->permalink . '&sharesource=qzone&title=' . $t->title . '&pics=' . thumb($t,0) . '&summary=' . $t->title . '&desc=' . $t->title;
     } else if ($type == 'weibo') {
-        echo 'https://service.weibo.com/share/share.php?url=' . $t->permalink . '&title=' . $t->title . '&pic=' . thumb($t);
+        echo 'https://service.weibo.com/share/share.php?url=' . $t->permalink . '&title=' . $t->title . '&pic=' . thumb($t,0);
     } else {
         echo 'https://www.facebook.com/sharer/sharer.php?u=' . $t->permalink;
     }
