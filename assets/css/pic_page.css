@@ -213,3 +213,7 @@ input[type="number"] {
 .dark .thumb {
     filter: grayscale(0.6);
 }
+
+.wrap_float #bearcool-images{
+    overflow: hidden;
+}
