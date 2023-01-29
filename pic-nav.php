@@ -74,7 +74,7 @@ if ($end >= $num) {
 
                     <?php for ($i = $begin; $i <= $end; $i++): ?>
                         <div class="portfolio-item p-2 col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                            <div class="content" href='<?php echo $thumbs[$i] ?>'>
+                            <div class="content">
                                 <div class="thumb clearbg">
                                     <img class="lazy" src="<?php $this->options->themeUrl('./assets/img/loading.gif'); ?>"
                                         data-src="<?php echo $thumbs[$i]; ?>"
@@ -89,6 +89,59 @@ if ($end >= $num) {
             </div>
         </div>
     </div>
+
+    <style>
+        .over {
+            background-color: rgba(0, 0, 0, 0.88);
+            opacity: 1;
+            filter: alpha(opacity=100);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            overflow: auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        .overimg {
+            position: absolute;
+            z-index: 11;
+            width: auto;
+            height: 99%;
+        }
+    </style>
+    <script>
+        function addExpand() {
+            var imgs = document.getElementsByClassName("content");
+            imgs[0].focus();
+            for (var i = 0; i < imgs.length; i++) {
+                imgs[i].addEventListener('click', expandPhoto);
+                imgs[i].addEventListener('keydown', expandPhoto);
+            }
+        }
+        function expandPhoto() {
+        //  console.log('点击了');
+            var overlay = document.createElement("div");
+            overlay.setAttribute("id", "over");
+            overlay.setAttribute("class", "over");
+            document.body.appendChild(overlay);
+
+            var img = document.createElement("img");
+            img.setAttribute("id", "expand");
+            img.setAttribute("class", "overimg");
+            img.src = this.getElementsByTagName('img')[0].getAttribute("src");
+            overlay.appendChild(img);
+            overlay.onclick = restore;
+        }
+        function restore() {
+            document.body.removeChild(document.getElementById("over"));
+        }
+        window.onload = addExpand;
+    </script>
+
     <script>
         function post(URL, PARAMS) {
             var temp = document.createElement("form");
