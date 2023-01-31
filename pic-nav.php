@@ -8,7 +8,7 @@
 if (!defined('__TYPECHO_ROOT_DIR__'))
     exit;
 $this->need('header.php'); ?>
-
+<script src="<?php $this->options->themeUrl('./assets/js/pic_page.js'); ?>"></script>
 <?php
 $options = Typecho_Widget::widget('Widget_Options');
 $pri_thumbs = explode("|", $options->bcool_cover); /*获取文章封面*/
@@ -94,207 +94,8 @@ if ($end >= $num) {
         </div>
     </div>
 
-    <style>
-        .over {
-            background-color: rgba(255, 255, 255, 0.88);
-            opacity: 1;
-            filter: alpha(opacity=100);
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 10;
-            overflow: auto;
-            display: flex;
-            justify-content: center;
-        }
-
-        .overimg {
-            position: absolute;
-            z-index: 11;
-            width: auto;
-            height: 100%;
-        }
-
-        .leftarrow,
-        .rightarrow {
-            position: fixed;
-            width: 40px;
-            height: 30px;
-            background-color: rgba(0, 0, 0, 0.8);
-            border-radius: 20px;
-            text-align: center;
-            line-height: 30px;
-            font-size: 20px;
-            color: #fff;
-            z-index: 12;
-            top: 50%;
-            user-select: none;
-        }
-
-        .leftarrow {
-            left: 5%;
-        }
-
-        .rightarrow {
-            right: 5%;
-        }
-
-        .close {
-            position: fixed;
-            width: 40px;
-            height: 30px;
-            text-align: center;
-            line-height: 30px;
-            user-select: none;
-            border-radius: 15px;
-            top: 10%;
-            right: 5%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 12;
-            color: #fff;
-        }
-    </style>
     <script>
-        function addExpand() {
-            var imgs = document.getElementsByClassName("content");
-            imgs[0].focus();
-            for (var i = 0; i < imgs.length; i++) {
-                imgs[i].addEventListener('click', expandPhoto);
-                imgs[i].addEventListener('keydown', expandPhoto);
-                imgs[i].getElementsByTagName('img')[0].setAttribute("index", i);
-            }
-        }
-        function expandPhoto() {
-            // console.log('点击了');
-            var imgs = document.getElementsByClassName("content");
-            var maxlen = imgs.length;
-            var overlay = document.createElement("div");
-            overlay.setAttribute("id", "over");
-            overlay.setAttribute("class", "over");
-            document.body.appendChild(overlay);
-
-            var img = document.createElement("img");
-            img.setAttribute("id", "expand");
-            img.setAttribute("class", "overimg");
-            // img.setAttribute("src","https://www.fengdaxian.x…r/assets/img/loading.gif")
-            var tureimg = this.getElementsByTagName('img')[0];
-
-            img.src = tureimg.getAttribute("src");
-            overlay.appendChild(img);
-
-            // function loadImage(url, callback) {
-            //     var img = new Image();
-            //     img.src = url;
-            //     img.onload = function () { //图片下载完毕时异步调用callback函数。 
-            //         callback.call(img); // 将callback函数this指针切换为img。 
-            //     };
-            // }
-
-            var flag = 1;
-            img.ondblclick=function(e){
-                console.log(e);
-                var x = window.innerWidth/2-e.clientX;
-                var y = window.innerHeight/2-e.clientY;
-                if (flag==1){
-                    img.style.transform="scale(2) translateX("+x+"px)"
-                    img.style.top = 2*y+"px";
-                    // img.style.height=window.innerHeight*2+"px";
-                    flag=0;
-                }else{
-                    img.style.transform="";
-                    img.style.top="0px";
-                    img.style.height="100%";
-                    flag=1;
-                }
-            }
-
-            var left = document.createElement("div");
-            left.setAttribute("id", "leftarrow");
-            left.setAttribute("class", "leftarrow");
-            left.innerHTML = "<<"
-            document.body.appendChild(left);
-            var index = tureimg.getAttribute('index');
-            left.onclick = function () {
-                // console.log(index);
-                var imgs = document.getElementsByClassName("content");
-                // console.log(tureimg.getAttribute('index'));
-                if (index > 0) {
-                    --index;
-                    img.src = "https://www.fengdaxian.xyz/usr/themes/gleaner/assets/img/picload.gif";
-                    var tempimg = new Image();
-                    tempimg.src = imgs[index].getElementsByTagName('img')[0].getAttribute('data-src');
-                    console.log(tempimg);
-                    tempimg.onload = function () { //图片下载完毕时异步调用callback函数。 
-                        img.setAttribute("src", imgs[index].getElementsByTagName('img')[0].getAttribute('data-src'));
-                    };
-                    // img.src = imgs[index].getElementsByTagName('img')[0].getAttribute('data-src');
-                } else {
-                    alert("到顶了，别点了");
-                }
-            };
-            var right = document.createElement("div");
-            right.setAttribute("id", "rightarrow");
-            right.setAttribute("class", "rightarrow");
-            right.innerHTML = ">>"
-            document.body.appendChild(right);
-            right.onclick = function () {
-                var imgs = document.getElementsByClassName("content");
-                // console.log(tureimg.getAttribute('index'));
-                if (index < maxlen - 1) {
-                    ++index;
-                    img.src = "https://www.fengdaxian.xyz/usr/themes/gleaner/assets/img/picload.gif";
-                    var tempimg = new Image();
-                    tempimg.src = imgs[index].getElementsByTagName('img')[0].getAttribute('data-src');
-                    console.log(tempimg);
-                    tempimg.onload = function () { //图片下载完毕时异步调用callback函数。 
-                        img.setAttribute("src", imgs[index].getElementsByTagName('img')[0].getAttribute('data-src'));
-                    };
-                    
-                    // img.src = imgs[index].getElementsByTagName('img')[0].getAttribute('data-src');
-                } else {
-                    alert("到底了，别点了");
-                }
-            };
-
-            var close = document.createElement("div");
-            close.setAttribute("class", "close");
-            close.setAttribute("id", "close");
-            close.innerHTML = "X";
-            document.body.appendChild(close);
-            close.onclick = restore;
-            // overlay.onclick = restore;
-
-        }
-        function restore() {
-            document.body.removeChild(document.getElementById("over"));
-            document.body.removeChild(document.getElementById("leftarrow"));
-            document.body.removeChild(document.getElementById("rightarrow"));
-            document.body.removeChild(document.getElementById("close"));
-        }
-        // window.onload = addExpand;
-        // window.addEventListener('load', addExpand);
         addExpand();
-    </script>
-
-    <script>
-        function post(URL, PARAMS) {
-            var temp = document.createElement("form");
-            temp.action = URL;
-            temp.method = "post";
-            temp.style.display = "none";
-            for (var x in PARAMS) {
-                var opt = document.createElement("textarea");
-                opt.name = x;
-                opt.value = PARAMS[x];
-                // alert(opt.name)
-                temp.appendChild(opt);
-            }
-            document.body.appendChild(temp);
-            temp.submit();
-            return temp;
-        }
     </script>
     <script>
         $(document).ready(function () {
@@ -341,7 +142,5 @@ if ($end >= $num) {
         </div>
 
     </div>
-    <!-- <div id="test" style="height:70px;padding:30px 10px;font-size: 300%;"></div> -->
-    <!-- <div id="div1"></div> -->
-    <!-- <div class="pageNav" id="pageNav"></div> -->
+
     <?php $this->need('footer.php'); ?>
