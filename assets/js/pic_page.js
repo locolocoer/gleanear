@@ -16,6 +16,29 @@ function expandPhoto() {
     overlay.setAttribute("id", "over");
     overlay.setAttribute("class", "over");
     document.body.appendChild(overlay);
+
+    // info tip begin
+    var info = document.createElement("div");
+    info.className="info";
+    overlay.appendChild(info);
+    // info tip end
+
+    // loading code
+    var container = document.createElement("view");
+    container.className="container";
+    overlay.appendChild(container);
+    var dot1 = document.createElement("view");
+    dot1.className="dot dot-1";
+    container.appendChild(dot1);
+    var dot2 = document.createElement("view");
+    dot2.className="dot dot-2";
+    container.appendChild(dot2);
+    var dot3 = document.createElement("view");
+    dot3.className="dot dot-3";
+    container.appendChild(dot3);
+    container.style.display="none";
+    // loading code end
+
     var img = document.createElement("img");
     img.setAttribute("id", "expand");
     img.setAttribute("class", "overimg");
@@ -29,10 +52,17 @@ function expandPhoto() {
     left.innerHTML = "<<"
     document.body.appendChild(left);
     var index = tureimg.getAttribute('index');
+    var tops
+    if(window.screen.width<1000){
+        tops = "50%"
+    }else{
+        tops = "0%"
+    }
+    img.style.top=tops;
     load(index);
     left.onclick = function () {
         img.style.transform="";
-        img.style.top="0px";
+        img.style.top=tops;
         img.style.height="100%";
         flag=1;
         if (index > 0) {
@@ -50,7 +80,7 @@ function expandPhoto() {
     document.body.appendChild(right);
     right.onclick = function () {
         img.style.transform="";
-        img.style.top="0px";
+        img.style.top=tops;
         img.style.height="100%";
         flag=1;
         if (index < maxlen - 1) {
@@ -65,27 +95,39 @@ function expandPhoto() {
         console.log(e);
         var x = window.innerWidth/2-e.clientX;
         var y = window.innerHeight/2-e.clientY;
+        var offset
+        if(tops=="50%"){
+            offset=window.innerHeight/2-img.height/2;
+            console.log(offset);
+        }else{
+            offset=0;
+        }
         if (flag==1){
             img.style.transform="scale(2) translateX("+x+"px)"
-            img.style.top = 2*y+"px";
+            img.style.top = 2*y+offset+"px";
             // img.style.height=window.innerHeight*2+"px";
             flag=0;
         }else{
             img.style.transform="";
-            img.style.top="0px";
+            img.style.top=tops;
             img.style.height="100%";
             flag=1;
         }
     }
 
     function load(index){
+        
+        info.innerHTML=(parseInt(index)+1)+"/100";
         imgs = document.body.getElementsByClassName("lazy");
         var tempimg = new Image();
         tempimg.src = imgs[index].getAttribute("data-src");
         img = document.getElementById("expand");
-        img.src = "https://www.fengdaxian.xyz/usr/themes/gleaner/assets/img/picload.gif";
+        img.style.display="none";
+        container.style.display="block";
+        // img.src = "https://www.fengdaxian.xyz/usr/themes/gleaner/assets/img/picload.gif";
         tempimg.onload = function(){
-            console.log(tempimg.src);
+            container.style.display="none";
+            img.style.display="block";
             img.src=tempimg.src;
         }
     }
@@ -98,6 +140,7 @@ function expandPhoto() {
     close.onclick = restore;
     // overlay.onclick = restore;
 
+    
 }
 
 

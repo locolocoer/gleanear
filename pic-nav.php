@@ -14,8 +14,15 @@ $options = Typecho_Widget::widget('Widget_Options');
 $pri_thumbs = explode("|", $options->bcool_cover); /*获取文章封面*/
 $pub_thumbs = explode("|", $options->public_bcool_cover);
 if ($this->user->hasLogin()) {
-    $thumbs = array_merge($pri_thumbs, $pub_thumbs);
-} else {
+    if($options->bcool_cover!=""&&$options->public_bcool_cover!=""){
+        $thumbs = array_merge($pri_thumbs, $pub_thumbs);
+    }else if($options->bcool_cover!=""){
+        $thumbs = $pri_thumbs;
+    }else if($options->public_bcool_cover!=""){
+        $thumbs = $pub_thumbs;
+    }
+    
+} else if($options->public_bcool_cover!=""){
     $thumbs = $pub_thumbs;
 }
 $num = count($thumbs);

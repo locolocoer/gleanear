@@ -20,7 +20,7 @@
                     </div>
                 </div>
                 <?php if (!$this->is('index')) : ?>
-                    <div class="footer-right"><a href="#" class="login-link"><i class="fa-solid fa-circle-up"></i> 返回顶部</a>
+                    <div class="footer-right"><a id="roll_up" class="login-link"><i class="fa-solid fa-circle-up"></i> 返回顶部</a>
                     </div><?php endif; ?>
             </div>
         </div>
@@ -42,6 +42,13 @@
     </div>
 </div>
 </div>
+<script>
+    $("#roll_up").click(function(){
+        $("body,html").stop().animate(
+            {scrollTop:0}
+        );
+    })
+</script>
 <?php if ($this->is('index')) : ?>
     <style> .index-anchor {
             background-image: <?php if (empty($this->options->bcool_lightcolor)) echo 'linear-gradient(0deg, #4584b4, #1e4877)'; else echo $this->options->bcool_lightcolor; ?>;
@@ -189,9 +196,7 @@
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
 <script>hljs.highlightAll();</script>
-<!-- <script type="text/javascript"
-   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTML">
-</script> -->
+<?php if($this->is("post")):?>
 <script type="text/javascript"
    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=default">
 </script>
@@ -210,21 +215,8 @@
     }
   });
 </script>
-<!-- <script>
-    MathJax = {
-        tex: {
-            inlineMath: [['$', '$'], ['\\(', '\\)']]
-        },
-        chtml: {
-            scale: 1.0
-        },
-        svg: {
-            scale: 1.0
-        }
-    };
-</script>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script> -->
+<?php endif;?>
+
 <?php $this->footer(); ?>
 </body>
 </html>
