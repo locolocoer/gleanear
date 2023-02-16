@@ -154,6 +154,8 @@ function restore() {
 
 
 function post(URL, PARAMS) {
+    // localStorage.setItem("pageNum",PARAMS["pageNum"]);
+    // localStorage.setItem("pageNum",1);
     var temp = document.createElement("form");
     temp.action = URL;
     temp.method = "post";
